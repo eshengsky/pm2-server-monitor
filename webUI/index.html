@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="./static/monitor.ico">
+    <title>PM2 Server Monitor</title>
+    <link rel="stylesheet" href="./static/iconfont.css">
+    <link rel="stylesheet" href="./static/animate.min.css">
+    <link rel="stylesheet" href="./static/app.css">
+</head>
+
+<body>
+    <div class="container" v-cloak>
+        <div class="wrap-head"><i class="iconfont icon-liubianxinglogo"></i> PM2 Server Monitor</div>
+        <div class="wrap-select">
+            <select id="project-list" v-model="currentProject">
+                <option v-for="item in getProjects()" :value="item">{{item}}</option>
+            </select>
+        </div>
+        <div id="wrap-stats">
+            <div class="stats-panel" v-for="item in getIps" v-bind:id="'ip' + item.ip + ':' + item.port">
+                <div class="stats-panel-title">
+                    <span title="Hostname" v-tippy="{ theme : 'mytheme' }">
+                        <i class="iconfont icon-server"></i>
+                        <span class="hostname">host</span>
+                    </span>
+                    <span title="CPU Cores" v-tippy="{ theme : 'mytheme' }">
+                        <i class="iconfont icon-hive"></i>
+                        <span class="cpus">0</span></span>
+                    <span title="System CPU" v-tippy="{ theme : 'mytheme' }">
+                        <i class="iconfont icon-chip"></i>
+                        <span class="cpuUsage">0%</span>
+                    </span>
+                    <span title="System Memory (Available / Total)" v-tippy="{ theme : 'mytheme' }">
+                        <i class="mem-icon iconfont icon-memory-chip"></i>
+                        <span class="memUsage">0%</span>
+                        (<span class="freemem">0B</span> / <span class="totalmem">0B</span>)</span>
+                    <span title="Node.js version" v-tippy="{ theme : 'mytheme' }">
+                        <i class="iconfont icon-node-js"></i>
+                        <span class="nodev">-</span>
+                    </span>
+                    <span class="ipAddress" title="Server Address" v-tippy="{ theme : 'mytheme' }">{{item.ip}}:{{item.port}}</span>
+                    <span class="godid" style="display: none" desc="god pid"></span>
+                </div>
+                <div class="stats-panel-row">
+                    <span class="app-name-wrap" title="App Name" v-tippy="{ theme : 'mytheme' }">
+                        <i class="app-icon iconfont icon-hexagonoutline"></i>
+                        <span class="projectName">app</span>
+                        <span class="instances">x0</span>
+                    </span>
+                    <span title="Process CPU" v-tippy="{ theme : 'mytheme' }">
+                        <i class="cpu-icon iconfont icon-chip"></i>
+                        <span class="cpu">0%</span>
+                    </span>
+                    <span title="Process Memory" v-tippy="{ theme : 'mytheme' }">
+                        <i class="mem-icon iconfont icon-memory-chip"></i>
+                        <span class="memory">0B</span>
+                    </span>
+                    <span title="Restarts" v-tippy="{ theme : 'mytheme' }">
+                        <i class="restart-icon iconfont icon-undo"></i>
+                        <span class="restart">0</span>
+                    </span>
+                    <span title="Runtime" v-tippy="{ theme : 'mytheme' }">
+                        <i class="time-icon iconfont icon-time"></i>
+                        <span class="runtime">0s</span>
+                    </span>
+                    <button class="btn-detail" @click="item.show = !item.show" title="Detail" v-tippy="{ theme : 'mytheme' }">
+                        <i v-bind:style="item.show ? 'transform: rotate(-135deg);' : ''"></i>
+                    </button>
+                </div>
+                <transition enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
+                    <div class="stats-panel-list" v-show="item.show">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>App name</td>
+                                    <td>id</td>
+                                    <td>mode</td>
+                                    <td>pid</td>
+                                    <td>status</td>
+                                    <td>restart</td>
+                                    <td>uptime</td>
+                                    <td>cpu</td>
+                                    <td>mem</td>
+                                    <td>user</td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </transition>
+            </div>
+        </div>
+        <footer>Copyright © {{year}}</footer>
+    </div>
+    <script src="./static/vue.min.js"></script>
+    <script src="./static/socket.io.min.js"></script>
+    <script src="./static/vue-tippy.min.js"></script>
+    <script src="./config.js"></script>
+    <script src="./static/app.js"></script>
+</body>
+
+</html>

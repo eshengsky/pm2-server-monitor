@@ -1,0 +1,25 @@
+{
+  "name": "pm2-server-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eshengsky/pm2-server-monitor.git"
+  },
+  "author": "eshengsky@163.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eshengsky/pm2-server-monitor/issues"
+  },
+  "homepage": "https://github.com/eshengsky/pm2-server-monitor#readme",
+  "dependencies": {
+    "os-utils": "0.0.14",
+    "pm2": "^3.2.2",
+    "ps-node": "^0.1.6",
+    "socket.io": "^2.2.0"
+  }
+}
